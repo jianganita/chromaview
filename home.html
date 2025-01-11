@@ -66,7 +66,7 @@
             color: var(--text-color);
             cursor: pointer;
             font-size: 16px;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s;
             text-align: center;
             text-decoration: none;
         }
@@ -76,8 +76,9 @@
         }
     </style>
 </head>
+
 <body>
-    <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
     
     <div class="container">
         <div class="header">
@@ -85,16 +86,16 @@
         </div>
 
         <a href="#" class="button">Donate!</a>
-        <a href="#" class="button">Play</a>
+        <a href="page 1.html" class="button">Play</a>
         <a href="#" class="button">Accessibility</a>
         <a href="#" class="button">About the Team</a>
         <a href="#" class="button">More Information</a>
     </div>
 
     <script>
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-        }
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+    }
     </script>
 </body>
 </html>

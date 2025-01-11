@@ -8,6 +8,8 @@
         </head>
         
         <body>
+            <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    
             <div class = "container">
 
                 <div class = "colour-container">
@@ -34,5 +36,11 @@
             </div>
 
             <div class="hover-div">Hover over me!</div>
+
+            <script>
+                function toggleTheme() {
+                    document.body.classList.toggle('dark-theme');
+                }
+                </script>
         </body>
 </html>
