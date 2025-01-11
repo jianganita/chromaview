@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility</title>
+    <style>
+        :root {
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --button-bg: #fff;
+            --button-border: #ddd;
+            --button-hover: #f5f5f5;
+        }
+
+        .dark-theme {
+            --bg-color: #333;
+            --text-color: #fff;
+            --button-bg: #444;
+            --button-border: #555;
+            --button-hover: #505050;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+            
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .button {
+            padding: 15px 20px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: var(--button-hover);
+        }
+        .box{
+            position: relative;
+            
+            margin: auto;
+            text-align: center;
+            width: 600px;
+            height: 200px;
+            border-radius: 8px; 
+            padding: 20px;
+            
+        }
+        .box:hover {
+            border: 5px solid rgb(171, 171, 255);
+        }
+    </style>
+</head>
+
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Accessibility Options!</h1>
+        </div>
+        <div class = "box" id="tritanopia">
+            <h1>Tritanopia</h1>
+            <p> Unable to tell the difference between blue and green, purple and red, and yellow and pink. It also makes colors look less bright. </p>
+        </div>
+        <div class = "box" id="deuteranopia">
+            <h1>Deuteranopia</h1>
+            <p> This is when your M cones are missing. So, you can't perceive green light. You mostly see blues and golds. You may confuse some shades of red with some shades of green. You may also confuse yellows with bright shades of green.
+            </p>
+        </div>
+        <div class = "box" id="protanopia">
+            <h1>Protanopia</h1>
+            <p> A state in which the red cones are absent, leaving only the cones that absorb blue and green light.</p>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+    }
+
+    boxes = document.getElementsByClassName("box");
+    console.log(boxes[0]);
+
+    function OnClick(){
+        
+    }
+
+
+
+
+
+    </script>
+</body>
+</html>
+
