@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Matching Simulator</title>
+    <style>
+        :root {
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --button-bg: #fff;
+            --button-border: #ddd;
+            --button-hover: #f5f5f5;
+        }
+
+        .dark-theme {
+            --bg-color: #333;
+            --text-color: #fff;
+            --button-bg: #444;
+            --button-border: #555;
+            --button-hover: #505050;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .button {
+            padding: 15px 20px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: var(--button-hover);
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Theme</button>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Colour Matching Simulator!</h1>
+        </div>
+
+        <a href="#" class="button">Donate!</a>
+        <a href="#" class="button">Play</a>
+        <a href="#" class="button">Accessibility</a>
+        <a href="#" class="button">About the Team</a>
+        <a href="#" class="button">More Information</a>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    </script>
+</body>
+</html>
