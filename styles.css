@@ -99,3 +99,59 @@
 #c6{
     background-color:#ffd966ff;
 }
+
+
+/*------- PAGE 3 ---------------------*/
+
+#slider {
+    width: 300px;
+    position: relative;
+
+}
+#center{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    top:20%;
+}
+#box1 {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+}
+#box2{
+    width: 400px;
+    height: 200px;
+    background-color: rgb(50, 50, 69);
+    transition: all 0.3s ease;
+    margin: 0 auto;
+}
+.colourbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: aliceblue;
+    width: 40%;
+    height: 40%;
+    margin: 20px;
+    margin-right: 40px;
+}
+.box-container{
+    top: 10%;
+    position: relative;
+    display: flex;
+
+    flex-direction: row;
+    justify-content: center;
+}
+.container1{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: #7a7a7a;
+    flex-direction: column;
+  
+}
