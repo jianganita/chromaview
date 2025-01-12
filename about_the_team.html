@@ -76,22 +76,17 @@
             text-decoration: none;
         }
 
-        .button:hover {
-            background-color: var(--button-hover);
-        }
+        
         .box{
             position: relative;
             
             margin: auto;
             text-align: center;
             width: 600px;
-            height: 200px;
+            height: 150px;
             border-radius: 8px; 
             padding: 20px;
             
-        }
-        .box:hover {
-            border: 5px solid rgb(171, 171, 255);
         }
         #backButton{
             position: absolute;
@@ -111,81 +106,27 @@
     <button id="backButton">Go Back</button>
     <div class="container">
         <div class="header">
-            <h1>Accessibility Options!</h1>
+            <h1>About the team</h1>
         </div>
         <div class = "box" id = "tritanopia">
-            <h1>Tritanopia</h1>
-            <p> Unable to tell the difference between blue and green, purple and red, and yellow and pink. It also makes colors look less bright. </p>
+        <p>Our team’s goal is to create an accessible, enjoyable tool that bridges the gap between medical assessment and public understanding, making color blindness detection more approachable and raising awareness in a fun, engaging way.
+        </p>
         </div>
-        <div class = "box" id ="deuteranopia">
-            <h1>Deuteranopia</h1>
-            <p> This is when your M cones are missing. So, you can't perceive green light. You mostly see blues and golds. You may confuse some shades of red with some shades of green. You may also confuse yellows with bright shades of green.
+        <div class = "box">
+            <p>Our colour blindness testing game offers a fun, interactive way to identify and understand color vision deficiencies, improving upon traditional methods like the Ishihara plates. It's especially effective for children and those unfamiliar with standard tests, enhancing the accuracy of detecting conditions such as Deuteranopia, Protanopia, and Tritanopia.
+            </p>
+            </div>
+        <div class = "box">
+            <p> Our game not only aids in early detection but also educates users on the challenges faced by individuals with color blindness, fostering empathy and awareness through engaging scenarios. This approach makes testing more accessible and enjoyable, bridging the gap between medical assessment and public understanding.
             </p>
         </div>
-        <div class = "box" id ="protanopia">
-            <h1>Protanopia</h1>
-            <p> A state in which the red cones are absent, leaving only the cones that absorb blue and green light.</p>
-        </div>
-
     </div>
-
     <script>
-    function toggleTheme() {
-        document.body.classList.toggle('dark-theme');
-    }
-
-    div1 = document.querySelector("#tritanopia");
-    div2 = document.querySelector("#deuteranopia");
-    div3 = document.querySelector("#protanopia");
-
-
-    function tritanopia(){
-        var page1 = window.open('page1.html', '_blank');
-
-            // Wait for the page to fully load, then apply the stylesheet change
-        page1.onload = function() {
-            var link = page1.document.querySelector('link[rel="stylesheet"]');
-            console.log(link);
-            if (link) {
-                link.href = 'tritanopia.css'; // Path to the new stylesheet
-            }
-        };
-        console.log("confirm");
-    }
-    function deuteranopia(){
-         var page1 = window.open('page1.html', '_blank');
-
-            // Wait for the page to fully load, then apply the stylesheet change
-        page1.onload = function() {
-            var link = page1.document.querySelector('link[rel="stylesheet"]');
-            console.log(link);
-            if (link) {
-                link.href = 'deuteranopia.css'; // Path to the new stylesheet
-            }
-        };
-        console.log("confirm");
-    }
-    function protanopia(){
-         var page1 = window.open('page1.html', '_blank');
-
-            // Wait for the page to fully load, then apply the stylesheet change
-        page1.onload = function() {
-            var link = page1.document.querySelector('link[rel="stylesheet"]');
-            console.log(link);
-            if (link) {
-                link.href = 'protanopia.css'; // Path to the new stylesheet
-            }
-        };
-        console.log("confirm");
-    }
-    div1.addEventListener('click',tritanopia);
-    div2.addEventListener('click',deuteranopia);
-    div3.addEventListener('click',protanopia);
-
-    document.getElementById('backButton').addEventListener('click', function() {
+         document.getElementById('backButton').addEventListener('click', function() {
             window.history.back(); // Navigate to the previous page
-    });
+        });
     </script>
+    
 </body>
 </html>
 
