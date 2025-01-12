@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility</title>
+    <style>
+        :root {
+            --bg-color: #f0f0f0;
+            --text-color: #333;
+            --button-bg: #fff;
+            --button-border: #ddd;
+            --button-hover: #f5f5f5;
+        }
+
+        .dark-theme {
+            --bg-color: #333;
+            --text-color: #fff;
+            --button-bg: #444;
+            --button-border: #555;
+            --button-hover: #505050;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            position: relative;
+            max-width: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            justify-content: center;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .button {
+            padding: 15px 20px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background-color: var(--button-hover);
+        }
+
+        .box{
+            position: relative;
+            margin: auto;
+            text-align: center;
+            width: 100%;
+            height: 150px;
+            border-radius: 8px; 
+            padding: 20px;
+        }
+      
+        #backButton{
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            background: none;
+            color: var(--text-color);
+        }
+        .column-container{
+            width: 100%;
+            display: flex;
+            background-color: var(--bg-color);
+            flex-direction: row;
+            gap: 20px;
+        }
+        .row-container{
+            width: 100%;
+            display: flex;
+            background-color: var(--bg-color);
+            flex-direction: column;
+            gap: 20px;
+        }
+        .circle{
+            width: 100%;
+            border-radius: 50%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    <button id="backButton">Go Back</button>
+    <div class="container">
+        <div class="header">
+            <h1> More Information  </h1>
+        </div>
+        <div class = "column-container">
+            <div class = " row-container">
+                <div class = "box">
+                    <p>For majority of the time, colour blindness is genetic, typically inherited from their mother, passed on through the X chromosome. When it’s genetically passed, it cannot be cured, but visual aids and glasses can help
+                    </p>
+                </div>
+                <div class = "box"> 
+                <p>Usually 1 in 12 (8%) men and 1 in 200 women are affected by colour blindness, making it quite a common disorder. Overall, approx 2.6 million Canadians have this disorder.This prevalence highlights the importance of awareness and accommodation, especially in areas like education, employment, and everyday activities where color differentiation is essential.
+                </p>    
+                </div>
+                <div class = "box"> 
+                    <p>Some symptoms of the disorder includes things like trouble seeing colours and the brightness of them, inability to see the difference between shades of the same/similar colours, and having an enhanced sense of smell
+                    </p>
+                </div>
+                <div class = "box"> 
+                    <p>Except in the severe form, having colour blindness does not affect the sharpness of your vision. Although, it can be affected by diabetes and age. In most cases, individuals with color blindness can still see clearly and lead normal lives with minor adjustments, such as using glasses or relying on others for color identification when necessary.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    function toggleTheme() {
+        document.body.classList.toggle('dark-theme');
+    }
+    document.getElementById('backButton').addEventListener('click', function() {
+            window.history.back(); // Navigate to the previous page
+        });
+    
+    </script>
+</body>
+</html>
+
