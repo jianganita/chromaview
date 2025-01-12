@@ -137,18 +137,40 @@
             var link = page1.document.querySelector('link[rel="stylesheet"]');
             console.log(link);
             if (link) {
-                link.href = 'deuteranopia.css'; // Path to the new stylesheet
+                link.href = 'tritanopia.css'; // Path to the new stylesheet
             }
         };
         console.log("confirm");
     }
     function deuteranopia(){
+         var page1 = window.open('page1.html', '_blank');
+
+            // Wait for the page to fully load, then apply the stylesheet change
+        page1.onload = function() {
+            var link = page1.document.querySelector('link[rel="stylesheet"]');
+            console.log(link);
+            if (link) {
+                link.href = 'deuteranopia.css'; // Path to the new stylesheet
+            }
+        };
+        console.log("confirm");
     }
     function protanopia(){
+         var page1 = window.open('page1.html', '_blank');
+
+            // Wait for the page to fully load, then apply the stylesheet change
+        page1.onload = function() {
+            var link = page1.document.querySelector('link[rel="stylesheet"]');
+            console.log(link);
+            if (link) {
+                link.href = 'protanopia.css'; // Path to the new stylesheet
+            }
+        };
+        console.log("confirm");
     }
     div1.addEventListener('click',tritanopia);
-
-
+    div2.addEventListener('click',deuteranopia);
+    div3.addEventListener('click',protanopia);
 
 
     </script>
