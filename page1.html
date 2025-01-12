@@ -33,7 +33,7 @@
             document.body.classList.toggle('dark-theme');
         }
     </script>
-    <script type="module" src="pg1script.js">
+    <script>
         document.addEventListener('DOMContentLoaded', () => {
             const boxes = document.querySelectorAll('.box');
             const answers = document.querySelectorAll('.ans');
@@ -79,9 +79,6 @@
                 };
 
                 const isCorrect = colorMapping[selectedBox.id] === selectedAnswer.id;
-
-                const game = new ColorGame();
-                game.checkPage1Answer(selectedBox.id, selectedAnswer.id);
                 
                 // hide the elements
                 selectedBox.classList.add('hidden');
