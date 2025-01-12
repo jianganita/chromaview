@@ -65,10 +65,3 @@ Our data and information come from trusted sources:
 * Anita Jiang
 * Aafia Desai
 * Heer Darji
-
----
-> Project maintained by [Your Organization]
-
-> Licensed under [License Type]
-
-> For support or inquiries, contact [contact information]
