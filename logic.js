@@ -20,17 +20,15 @@ class ColorGame {
             }));
         } else {
             const state = JSON.parse(localStorage.getItem('colorGameState'));
+            this.scores = state.scores || this.scores;
+            this.answers = state.answers || this.answers;
             this.colorMode = state.colorMode || 'normal';
         }
     }
 
     setColorMode(mode) {
         this.colorMode = mode;
-        localStorage.setItem('colorGameState', JSON.stringify({
-            scores: this.scores,
-            answers: this.answers,
-            colorMode: this.colorMode
-        }));
+        this.saveState();
     }
 
     saveState() {
@@ -43,19 +41,22 @@ class ColorGame {
 
     loadState() {
         const state = JSON.parse(localStorage.getItem('colorGameState'));
-        this.scores = state.scores;
-        this.answers = state.answers;
-        this.colorMode = state.colorMode || 'normal';
+        if (state) {
+            this.scores = state.scores || this.scores;
+            this.answers = state.answers || this.answers;
+            this.colorMode = state.colorMode || 'normal';
+        }
     }
 
     // Page 1
-    checkPage1Answer(selectedColor, targetColor) {
+    checkPage1Answer(selectedColor, targetColor, colorName) {
         const isCorrect = this.compareColors(selectedColor, targetColor);
         this.scores.page1 = isCorrect ? 1 : 0;
         this.answers.push({
             page: 1,
             selected: selectedColor,
             target: targetColor,
+            colorName: colorName,
             correct: isCorrect,
             mode: this.colorMode
         });
@@ -65,19 +66,19 @@ class ColorGame {
 
     // Page 2
     checkPage2Answer(selectedColors, targetColors) {
-        let rightCount = 0;
-        const results = selectedColors.map((selected, index) => {
-            const isCorrect = this.compareColors(selected, targetColors[index]);
-            if (isCorrect) rightCount++;
-            return isCorrect;
-        });
+        const results = selectedColors.map((selected, index) => ({
+            selected,
+            target: targetColors[index],
+            colorName: colorNames[index],
+            isCorrect: this.compareColors(selected, targetColors[index])
+        }));
         
-        this.scores.page2 = rightCount / targetColors.length;
+        const correctCount = results.filter(r => r.isCorrect).length;
+        this.scores.page2 = correctCount / targetColors.length;
+        
         this.answers.push({
             page: 2,
-            selected: selectedColors,
-            target: targetColors,
-            correct: results,
+            matches: results,
             mode: this.colorMode
         });
         this.saveState();
@@ -86,7 +87,6 @@ class ColorGame {
 
     // Page 3
     checkPage3Answer(selectedHue, targetHue) {
-        // Allow for some margin of error (+/- 5 degrees)
         const tolerance = 5;
         const difference = Math.abs(selectedHue - targetHue);
         const isCorrect = difference <= tolerance;
@@ -119,22 +119,25 @@ class ColorGame {
     }
 
     parseColor(color) {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = color;
-        return {
-            r: parseInt(ctx.fillStyle.slice(1, 3), 16),
-            g: parseInt(ctx.fillStyle.slice(3, 5), 16),
-            b: parseInt(ctx.fillStyle.slice(5, 7), 16)
-        };
+        if (typeof color === 'string') {
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = color;
+            return {
+                r: parseInt(ctx.fillStyle.slice(1, 3), 16),
+                g: parseInt(ctx.fillStyle.slice(3, 5), 16),
+                b: parseInt(ctx.fillStyle.slice(5, 7), 16)
+            };
+        }
+        return color;
     }
 
     analyzeColorBlindness() {
         const results = {
             totalScore: 0,
-            possibleConditions: [],
-            details: [],
-            confidence: 'low'
+            wrongAnswers: [],
+            conditions: [],
+            details: {}
         };
 
         // Calculate total score
@@ -150,58 +153,86 @@ class ColorGame {
 
         results.totalScore = (totalCorrect / totalTests) * 100;
 
-        // analyze answers
-        const redGreenErrors = this.answers.filter(answer => {
+        // Collect wrong answers
+        this.answers.forEach(answer => {
             if (answer.page === 1 || answer.page === 2) {
-                const selected = this.parseColor(answer.selected);
-                const target = this.parseColor(answer.target);
-                return Math.abs(selected.r - target.r) > 30 || 
-                       Math.abs(selected.g - target.g) > 30;
+                if (answer.page === 1 && !answer.correct) {
+                    results.wrongAnswers.push({
+                        page: 1,
+                        colorName: answer.colorName,
+                        selected: answer.selected,
+                        target: answer.target
+                    });
+                } else if (answer.page === 2) {
+                    answer.matches.forEach(match => {
+                        if (!match.isCorrect) {
+                            results.wrongAnswers.push({
+                                page: 2,
+                                colorName: match.colorName,
+                                selected: match.selected,
+                                target: match.target
+                            });
+                        }
+                    });
+                }
             }
-            return false;
-        }).length;
+        });
 
-        const blueYellowErrors = this.answers.filter(answer => {
-            if (answer.page === 1 || answer.page === 2) {
-                const selected = this.parseColor(answer.selected);
-                const target = this.parseColor(answer.target);
-                return Math.abs(selected.b - target.b) > 30;
+        const redGreenErrors = results.wrongAnswers.filter(answer => 
+            this.isRedGreenError(answer.selected, answer.target)
+        ).length;
+
+        const blueYellowErrors = results.wrongAnswers.filter(answer => 
+            this.isBlueYellowError(answer.selected, answer.target)
+        ).length;
+
+        results.details = {
+            tritanopia: {
+                name: "Tritanopia",
+                description: "A rare type of color blindness that affects the ability to distinguish between blue and green, purple and red, and yellow and pink colors.",
+                detected: blueYellowErrors > 1
+            },
+            deuteranopia: {
+                name: "Deuteranopia",
+                description: "A common type of red-green color blindness where the green cone photopigments are absent, making it difficult to distinguish between reds and greens.",
+                detected: redGreenErrors > 1 && this.hasGreenWeakness(results.wrongAnswers)
+            },
+            protanopia: {
+                name: "Protanopia",
+                description: "A type of red-green color blindness where the red cone photopigments are absent, making reds appear darker and reducing the brightness of red, orange, and yellow colors.",
+                detected: redGreenErrors > 1 && this.hasRedWeakness(results.wrongAnswers)
             }
-            return false;
-        }).length;
-
-        // Accurate diagnoses
-        if (redGreenErrors > blueYellowErrors && redGreenErrors > 1) {
-            results.possibleConditions.push('Possible Red-Green Color Vision Deficiency');
-            if (this.colorMode === 'protanopia' || this.colorMode === 'deuteranopia') {
-                results.details.push('Your results align with your selected color blindness mode.');
-                results.confidence = 'high';
-            }
-        }
-
-        if (blueYellowErrors > 1) {
-            results.possibleConditions.push('Possible Blue-Yellow Color Vision Deficiency');
-            if (this.colorMode === 'tritanopia') {
-                results.details.push('Your results align with your selected color blindness mode.');
-                results.confidence = 'high';
-            }
-        }
-
-        // Add feedback
-        if (results.totalScore > 90) {
-            results.details.push('Your color matching ability appears to be excellent!');
-        } else if (results.totalScore > 70) {
-            results.details.push('Your color matching ability is good, but there might be room for improvement.');
-        } else {
-            results.details.push('You might benefit from using color blindness assistance tools.');
-        }
-
-        // Add mode-specific feedback
-        if (this.colorMode !== 'normal') {
-            results.details.push(`Test completed in ${this.colorMode} simulation mode.`);
-        }
+        };
 
         return results;
+    }
+
+    isRedGreenError(selected, target) {
+        const s = this.parseColor(selected);
+        const t = this.parseColor(target);
+        return Math.abs(s.r - t.r) > 30 || Math.abs(s.g - t.g) > 30;
+    }
+
+    isBlueYellowError(selected, target) {
+        const s = this.parseColor(selected);
+        const t = this.parseColor(target);
+        return Math.abs(s.b - t.b) > 30;
+    }
+
+    hasGreenWeakness(wrongAnswers) {
+        return wrongAnswers.some(answer => {
+            const t = this.parseColor(answer.target);
+            const s = this.parseColor(answer.selected);
+            return t.g > t.r && t.g > t.b && s.g < s.r;
+        });
+    }
+
+    hasRedWeakness(wrongAnswers) {
+        return wrongAnswers.some(answer => {
+            const t = this.parseColor(answer.target);
+            const s = this.parseColor(answer.selected);
+            return t.r > t.g && t.r > t.b && s.r < s.g;
+        });
     }
 
     reset() {

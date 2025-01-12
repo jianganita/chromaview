@@ -102,6 +102,30 @@
             }
         });
     </script>
+
+    <script>
+        import CsolorGame from './logic.js';
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            const game = new ColorGame();
+            
+            const boxes = document.querySelectorAll('.box');
+            const answers = document.querySelectorAll('.ans');
+            
+            const originalHandleMatch = handleMatch;
+            function handleMatch() {
+                const boxId = selectedBox.id;
+                const answerId = selectedAnswer.id;
+                const boxColor = getComputedStyle(selectedBox).backgroundColor;
+                const answerText = selectedAnswer.textContent;
+                
+                game.checkPage1Answer(boxColor, answerText, answerId);
+                
+                originalHandleMatch();
+            }
+        });
+    </script>
+
     <script src="themeChangeCheck.js"></script>
 </body>
 </html>

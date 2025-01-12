@@ -1,33 +1,83 @@
 <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Hover Border</title>
-            <link rel="stylesheet" href="styles.css">
-        </head>
-        
-        <body>
-            <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
-            
-            <div class = "container1">
-                <div class = "box-container">
-                    <div class = "colourbox" id = "box1"></div>
-                    <div class = "colourbox" id = "box2"></div>
-                </div>
-                <div id = "center">
-                    <input type="range" id="slider" min="0" max="100" value="50">
-                    <button style="cursor: pointer;" id = "Submit"> Submit </button>
-                </div>
-            </div>
-            <div class="hover-div">Hover over me!</div>
-            <script src="pg3script.js"></script>
-            <script src = "themeChangeCheck.js"></script>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Match - Page 3</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    
+    <div class="container1">
+        <div class="box-container">
+            <div class="colourbox" id="box1"></div>
+            <div class="colourbox" id="box2"></div>
+        </div>
+        <div id="center">
+            <input type="range" id="slider" min="0" max="100" value="50">
+            <button style="cursor: pointer;" id="Submit">Submit</button>
+        </div>
+    </div>
 
-            <script>
-                function toggleTheme() {
-                    document.body.classList.toggle('dark-theme');
+    <!-- Original scripts -->
+    <script src="pg3script.js"></script>
+    <script src="themeChangeCheck.js"></script>
+
+    <!-- Theme toggle functionality -->
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    </script>
+
+    <!-- Game logic integration -->
+    <script type="module">
+        import ColorGame from './logic.js';
+
+        const game = new ColorGame();
+        const button = document.getElementById('Submit');
+        
+        button.addEventListener('click', () => {
+            const box1 = document.getElementById('box1');
+            const box2 = document.getElementById('box2');
+            
+            const style1 = getComputedStyle(box1);
+            const style2 = getComputedStyle(box2);
+            
+            const rgb1 = style1.backgroundColor.match(/\d+/g).map(Number);
+            const rgb2 = style2.backgroundColor.match(/\d+/g).map(Number);
+            
+            const hue1 = rgbToHue(rgb1[0], rgb1[1], rgb1[2]);
+            const hue2 = rgbToHue(rgb2[0], rgb2[1], rgb2[2]);
+            
+            game.checkPage3Answer(hue2, hue1);
+            window.location.href = 'results.html';
+        });
+
+        function rgbToHue(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h;
+
+            if (max === min) {
+                h = 0;
+            } else {
+                const d = max - min;
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
                 }
-            </script>
-        </body>
+                h *= 60;
+            }
+            
+            return h;
+        }
+    </script>
+</body>
 </html>

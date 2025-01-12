@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Results</title>
+    <link rel="stylesheet" href="styles.css">
+    <style> 
+        .results-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .analysis-item {
+            padding: 15px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .info-section {
+            margin: 30px 0;
+        }
+
+        .info-box {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid var(--button-border);
+            border-radius: 8px;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #007bff;
+        }
+
+        .disclaimer {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: var(--button-bg);
+            border-radius: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+    
+    <div class="results-container">
+        <div class="header">
+            <h1>Your Test Results</h1>
+        </div>
+        
+        <div class="analysis-grid">
+            <div class="analysis-item">
+                <h3>Red Accuracy</h3>
+                <div id="red-accuracy">--</div>
+            </div>
+            <div class="analysis-item">
+                <h3>Green Accuracy</h3>
+                <div id="green-accuracy">--</div>
+            </div>
+            <div class="analysis-item">
+                <h3>Blue Accuracy</h3>
+                <div id="blue-accuracy">--</div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-box">
+                <h3>Tritanopia</h3>
+                <p>A rare form of color blindness that affects the ability to distinguish between blue and green colors, as well as yellow and pink colors. People with tritanopia also experience reduced brightness in these color ranges.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Deuteranopia</h3>
+                <p>A common type of red-green color blindness where the green cone photopigments are missing. This makes it difficult to distinguish between reds and greens, and can also affect the ability to differentiate between yellows and bright greens.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>Protanopia</h3>
+                <p>A type of color blindness where the red cone photopigments are absent. This results in difficulty seeing differences between reds, greens, and yellows, and makes red colors appear darker than they are to others.</p>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <a href="home.html" class="button">Return Home</a>
+            <a href="page1.html" class="button">Take Test Again</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+
+        function displayResults() {
+            try {
+                const colorMatchResult = localStorage.getItem('colorMatchResult');
+                
+                if (colorMatchResult) {
+                    const matchResults = JSON.parse(colorMatchResult);
+                    
+                    // Normalize the RGB errors to proper percentages (0-100 scale)
+                    const normalizeError = (error) => {
+                        return Math.max(0, Math.min(100, (1 - error / 255) * 100));
+                    };
+                    
+                    // Calculate normalized accuracies
+                    document.getElementById('red-accuracy').textContent = 
+                        normalizeError(matchResults.redError).toFixed(1) + '%';
+                    document.getElementById('green-accuracy').textContent = 
+                        normalizeError(matchResults.greenError).toFixed(1) + '%';
+                    document.getElementById('blue-accuracy').textContent = 
+                        normalizeError(matchResults.blueError).toFixed(1) + '%';
+                } else {
+                    throw new Error('No results found');
+                }
+            } catch (error) {
+                console.error('Error displaying results:', error);
+                document.querySelector('.results-container').innerHTML = `
+                    <div class="header">
+                        <h1>Error Loading Results</h1>
+                        <p>Please complete the color vision test first.</p>
+                    </div>
+                    <div class="button-container">
+                        <a href="home.html" class="button">Return Home</a>
+                        <a href="page1.html" class="button">Take Test</a>
+                    </div>
+                `;
+            }
+        }
+
+        // Load results when page loads
+        window.addEventListener('load', displayResults);
+    </script>
+
+    <script src="themeChangeCheck.js"></script>
+</body>
+</html>

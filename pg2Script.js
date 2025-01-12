@@ -2,6 +2,7 @@ import ColorGame from './logic.js';
 const game = new ColorGame();
 
 document.addEventListener('DOMContentLoaded', () => {
+    const game = ColorGame();
     const colorBoxes = document.querySelectorAll('.colour-container .box, .colour-container1 .box');
     const answerBoxes = document.querySelectorAll('.answer-container .ans, .answer-container1 .ans');
     let selectedColorBox = null;
