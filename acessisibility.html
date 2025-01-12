@@ -140,7 +140,8 @@
 
 
     function tritanopia(){
-        var page1 = window.open('page1.html', '_blank');
+        /*
+        var page1 = window.open('page1.html', '_self');
 
             // Wait for the page to fully load, then apply the stylesheet change
         page1.onload = function() {
@@ -150,33 +151,35 @@
                 link.href = 'tritanopia.css'; // Path to the new stylesheet
             }
         };
+        page2.onload = function() {
+            var link = page2.document.querySelector('link[rel="stylesheet"]');
+            console.log(link);
+            if (link) {
+                link.href = 'tritanopia.css'; // Path to the new stylesheet
+            }
+        };
+        */
         console.log("confirm");
+        localStorage.setItem('tritanopia', 'true');
+        localStorage.setItem('deuteranopia', 'false');
+        localStorage.setItem('protanopia', 'false');
+        window.location.href = 'page1.html';
+
     }
     function deuteranopia(){
-         var page1 = window.open('page1.html', '_blank');
-
-            // Wait for the page to fully load, then apply the stylesheet change
-        page1.onload = function() {
-            var link = page1.document.querySelector('link[rel="stylesheet"]');
-            console.log(link);
-            if (link) {
-                link.href = 'deuteranopia.css'; // Path to the new stylesheet
-            }
-        };
         console.log("confirm");
+        localStorage.setItem('tritanopia', 'false');
+        localStorage.setItem('deuteranopia', 'true');
+        localStorage.setItem('protanopia', 'false');
+        window.location.href = 'page1.html';
+       
     }
     function protanopia(){
-         var page1 = window.open('page1.html', '_blank');
-
-            // Wait for the page to fully load, then apply the stylesheet change
-        page1.onload = function() {
-            var link = page1.document.querySelector('link[rel="stylesheet"]');
-            console.log(link);
-            if (link) {
-                link.href = 'protanopia.css'; // Path to the new stylesheet
-            }
-        };
         console.log("confirm");
+        localStorage.setItem('tritanopia', 'false');
+        localStorage.setItem('deuteranopia', 'false');
+        localStorage.setItem('protanopia', 'true');
+        window.location.href = 'page1.html';
     }
     div1.addEventListener('click',tritanopia);
     div2.addEventListener('click',deuteranopia);

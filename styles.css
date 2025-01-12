@@ -120,15 +120,15 @@ body {
 }
 /*------------------------PAGE 2--------------------*/
 #c1{
-    background-color: #c9daf8ff;
+    background-color: rgb(255,0,0);
 }
 
 #c2{
-    background-color: #8e7cc3ff;
+    background-color: rgb(0,255,0);
 }
 
 #c3{
-    background-color: #fcba67ff;
+    background-color: rgb(0,0,255);
 
 }
 #c4{
