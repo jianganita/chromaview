@@ -1,82 +1,93 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const colorBoxes = document.querySelectorAll('.colour-container .box');
+  const answerBoxes = document.querySelectorAll('.answer-container .ans');
+  let selectedColorBox = null;
+  let selectedAnswerBox = null;
+  let matchedPairs = new Set();
 
-// script.js
+  const colorMapping = {
+      'p1c1': 'a3', // red -> "red"
+      'p1c2': 'a1', // blue -> "blue"
+      'p1c3': 'a2'  // yellow -> "yellow"
+  };
 
-// References to all the boxes in both containers
-const colorBoxes = document.querySelectorAll('.colour-container .box');
-const answerBoxes = document.querySelectorAll('.answer-container .ans');
-
-let selectedColorBox = null; // Track the selected color box
-let selectedAnswerBox = null; // Track the selected answer box
-
-/**
- * Extracts the last number from an element's ID.
- @param {string} id - The element's ID.
- @returns {string} - The last number in the ID.
- */
-function getLastNumber(id) {
-  return id.match(/\d+$/)?.[0]; // Match and return the last number
-}
-
-/**
- * Checks if the last number of the selected IDs matches.
- */
-function checkMatch() {
-  if (selectedColorBox && selectedAnswerBox) {
-    const colorBoxNumber = getLastNumber(selectedColorBox.id);
-    const answerBoxNumber = getLastNumber(selectedAnswerBox.id);
-
-    if (colorBoxNumber === answerBoxNumber) {
-      alert('Matched!');
-      selectedColorBox.classList.add('hidden'); // Hide matched color box
-      selectedAnswerBox.classList.add('hidden'); // Hide matched answer box
-    } else {
-      alert('No match. Try again!');
-    }
-
-    resetSelection(); // Reset selections
+  function handleColorBoxClick(event) {
+      if (matchedPairs.has(event.target.id)) return;
+      colorBoxes.forEach(box => box.style.border = '');
+      event.target.style.border = '5px solid #007bff';
+      selectedColorBox = event.target;
+      
+      checkMatch();
   }
-}
 
-/**
- * Resets the selected boxes.
- */
-function resetSelection() {
-  selectedColorBox = null;
-  selectedAnswerBox = null;
-}
+  function handleAnswerBoxClick(event) {
+      if (matchedPairs.has(event.target.id)) return;
+      answerBoxes.forEach(box => box.style.border = '');
+      event.target.style.border = '5px solid #007bff';
+      selectedAnswerBox = event.target;
+      
+      checkMatch();
+  }
 
-/**
- * Handles clicking on a color box.
- * @param {Event} event - The click event.
- */
-function handleColorBoxClick(event) {
-  selectedColorBox = event.target; // Set the selected color box
-  checkMatch(); // Check if there's a match
-}
+  function checkMatch() {
+      if (selectedColorBox && selectedAnswerBox) {
+          const colorId = selectedColorBox.id;
+          const answerId = selectedAnswerBox.id;
+          
+          if (colorMapping[colorId] === answerId) {
+              // match
+              matchedPairs.add(colorId);
+              matchedPairs.add(answerId);
 
-/**
- * Handles clicking on an answer box.
- * @param {Event} event - The click event.
- */
-function handleAnswerBoxClick(event) {
-  selectedAnswerBox = event.target; // Set the selected answer box
-  checkMatch(); // Check if there's a match
-}
+              selectedColorBox.classList.add('hidden');
+              selectedAnswerBox.classList.add('hidden');
+              
+              showMessage('Correct match!', 'success');
+              
+              if (matchedPairs.size === Object.keys(colorMapping).length * 2) {
+                  showMessage('Congratulations! You\'ve matched all colors!', 'success');
+              }
+          } else {
+              // not match
+              showMessage('Try again!', 'error');
+          }
+          
+          // reset
+          selectedColorBox.style.border = '';
+          selectedAnswerBox.style.border = '';
+          selectedColorBox = null;
+          selectedAnswerBox = null;
+      }
+  }
 
-// Add event listeners to color and answer boxes
-colorBoxes.forEach(box => box.addEventListener('click', handleColorBoxClick));
-answerBoxes.forEach(box => box.addEventListener('click', handleAnswerBoxClick));
+  function showMessage(text, type) {
+      let messageEl = document.getElementById('game-message');
+      if (!messageEl) {
+          messageEl = document.createElement('div');
+          messageEl.id = 'game-message';
+          messageEl.style.position = 'fixed';
+          messageEl.style.top = '20px';
+          messageEl.style.left = '50%';
+          messageEl.style.transform = 'translateX(-50%)';
+          messageEl.style.padding = '10px 20px';
+          messageEl.style.borderRadius = '5px';
+          messageEl.style.zIndex = '1000';
+          document.body.appendChild(messageEl);
+      }
 
+      messageEl.style.backgroundColor = type === 'success' ? '#4CAF50' : '#f44336';
+      messageEl.style.color = 'white';
+      messageEl.textContent = text;
+      messageEl.style.display = 'block';
+      setTimeout(() => {
+          messageEl.style.display = 'none';
+      }, 2000);
+  }
+  colorBoxes.forEach(box => {
+      box.addEventListener('click', handleColorBoxClick);
+  });
 
-
-/*
-const colorBoxes = document.querySelectorAll('.colour-container .box');
-const answerBoxes = document.querySelectorAll('.answer-container .ans');
-console.log(colorBoxes);
-console.log(answerBoxes);
-let selectedColorBox = null; // Track the selected color box
-let selectedAnswerBox = null; // Track the selected answer box
-
-colorBoxes.forEach(box => box.addEventListener('click', handleColorBoxClick));
-answerBoxes.forEach(box => box.addEventListener('click', handleAnswerBoxClick));
-*/
+  answerBoxes.forEach(box => {
+      box.addEventListener('click', handleAnswerBoxClick);
+  });
+});
