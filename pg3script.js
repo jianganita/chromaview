@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const value = slider.value;
 
       // Optionally, change the color based on the slider value
-      const hue = (value * 3.6);
-      box.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+      const red = Math.min(255, value * 2);
+      const blue = 255 - value * 2;
+      box.style.backgroundColor = `rgb(${red}, 0, ${blue})`;
     });
   });

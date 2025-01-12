@@ -1,0 +1,247 @@
+* {
+    transition: background-color 0.3s ease, 
+                color 0.3s ease,
+                border-color 0.3s ease;
+}
+
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333;
+    --button-bg: #fff;
+    --button-border: #ddd;
+    --button-hover: #f5f5f5;
+}
+
+.dark-theme {
+    --bg-color: #333;
+    --text-color: #fff;
+    --button-bg: #444;
+    --button-border: #555;
+    --button-hover: #505050;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+.container {
+    max-width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: var(--bg-color);
+    flex-direction: column;
+    gap: 20px;
+}
+
+.colour-container{
+    top: 10%;
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.colour-container1{
+    top: -5%;
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: row;
+    justify-content: center;   
+}
+
+.answer-container{
+    display: flex;
+    width: 100vw;
+    height: 60vh;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.answer-container1{
+    top: -7%;
+    position: relative;
+    display: flex;
+    width: 100vw;
+    height: 60vh;
+    flex-direction: row;
+    justify-content: center;   
+}
+
+.box:hover{
+    border: 5px solid var(--button-border);   
+}
+
+.ans:hover{
+    border: 5px solid var(--button-border);   
+}
+
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: aliceblue;
+    width: 40%;
+    height: 40%;
+    margin: 20px;
+    margin-right: 40px;
+}
+
+.ans{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: rgb(176, 176, 176);
+    width: 40%;
+    height: 40%;
+    margin: 20px;
+    margin-right: 40px;
+}
+#p1c1{
+    background-color: #ff0000ff;
+    /* red */
+}
+
+#p1c2{
+    background-color:#00a4a4ff;
+    /* blue */
+}
+
+#p1c3{
+    background-color:#ffc8a2ff; 
+    /* yellow */
+}
+/*------------------------PAGE 2--------------------*/
+#c1{
+    background-color: #c9d8b5ff;
+    /* blue  */
+}
+
+#c2{
+    background-color: #a390a3ff
+    /* purple */
+}
+
+#c3{
+    background-color: #fcbc87ff;
+    /* organge */
+
+}
+#c4{
+    background-color: #93b47dff;
+    /* green */
+}
+
+#c5{
+    background-color:#ff2f2fff;
+    /* red */
+}
+
+#c6{
+    background-color:#ffc8a2ff;
+    /* yellow */
+}
+/*------- PAGE 3 ---------------------*/
+.theme-toggle {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    padding: 10px;
+    border: none;
+    background: none;
+    color: var(--text-color);
+}
+
+.header {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.button {
+    padding: 15px 20px;
+    border: 1px solid var(--button-border);
+    border-radius: 8px;
+    background-color: var(--button-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: var(--button-hover);
+}
+
+/*------- PAGE 3 ---------------------*/
+
+#slider {
+    width: 300px;
+    position: relative;
+
+}
+#center{
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    top:20%;
+}
+#box1 {
+    width: 200px;
+    height: 200px;
+    background-color: blue;
+    transition: all 0.3s ease;
+    margin: 0 auto;
+}
+#box2{
+    width: 400px;
+    height: 200px;
+    background-color: rgb(50, 50, 69);
+    transition: all 0.3s ease;
+    margin: 0 auto;
+}
+.colourbox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 25px;
+    background-color: aliceblue;
+    width: 40%;
+    height: 40%;
+    margin: 20px;
+    margin-right: 40px;
+}
+.box-container{
+    top: 10%;
+    position: relative;
+    display: flex;
+
+    flex-direction: row;
+    justify-content: center;
+}
+.container1{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    background-color: var(--bg-color);
+    flex-direction: column;
+  
+}
+
+.hidden{
+    visibility: hidden;
+}

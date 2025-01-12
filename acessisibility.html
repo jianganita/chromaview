@@ -103,16 +103,16 @@
         <div class="header">
             <h1>Accessibility Options!</h1>
         </div>
-        <div class = "box" id="tritanopia">
+        <div class = "box" id = "tritanopia">
             <h1>Tritanopia</h1>
             <p> Unable to tell the difference between blue and green, purple and red, and yellow and pink. It also makes colors look less bright. </p>
         </div>
-        <div class = "box" id="deuteranopia">
+        <div class = "box" id ="deuteranopia">
             <h1>Deuteranopia</h1>
             <p> This is when your M cones are missing. So, you can't perceive green light. You mostly see blues and golds. You may confuse some shades of red with some shades of green. You may also confuse yellows with bright shades of green.
             </p>
         </div>
-        <div class = "box" id="protanopia">
+        <div class = "box" id ="protanopia">
             <h1>Protanopia</h1>
             <p> A state in which the red cones are absent, leaving only the cones that absorb blue and green light.</p>
         </div>
@@ -124,13 +124,29 @@
         document.body.classList.toggle('dark-theme');
     }
 
-    boxes = document.getElementsByClassName("box");
-    console.log(boxes[0]);
+    div1 = document.querySelector("#tritanopia");
+    div2 = document.querySelector("#deuteranopia");
+    div3 = document.querySelector("#protanopia");
 
-    function OnClick(){
-        
+
+    function tritanopia(){
+        var page1 = window.open('page1.html', '_blank');
+
+            // Wait for the page to fully load, then apply the stylesheet change
+        page1.onload = function() {
+            var link = page1.document.querySelector('link[rel="stylesheet"]');
+            console.log(link);
+            if (link) {
+                link.href = 'deuteranopia.css'; // Path to the new stylesheet
+            }
+        };
+        console.log("confirm");
     }
-
+    function deuteranopia(){
+    }
+    function protanopia(){
+    }
+    div1.addEventListener('click',tritanopia);
 
 
 
