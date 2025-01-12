@@ -28,6 +28,9 @@ Traditional color blindness testing methods can be intimidating and clinical, es
   * Level 1: Basic primary color matching
   * Level 2: Advanced primary & secondary color identification
   * Level 3: Complex color gradient matching
+ 
+## How to Use
+1) Download the repo and open home.html in your browser of choice.
 
 ## About Color Blindness
 ### Types of Color Vision Deficiency
