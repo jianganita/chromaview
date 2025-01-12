@@ -3,37 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hover Border</title>
+    <title>Color Match</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .selected {
+            border: 5px solid rgb(171, 171, 255) !important;
+        }
+    </style>
 </head>
-
 <body>
     <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
     
-    <div class = "container">
-
-        <div class = "colour-container">
-            <div class = "box" id = p1c1></div>
-            <div class = "box" id = p1c2></div>
-            <div class = "box" id = p1c3></div>
+    <div class="container">
+        <div class="colour-container">
+            <div class="box" id="p1c1"></div>
+            <div class="box" id="p1c2"></div>
+            <div class="box" id="p1c3"></div>
         </div>
 
-        <div class = "answer-container">
-            <div class = "ans" id = a1>Blue</div>
-            <div class = "ans" id = a2>Yellow</div>
-            <div class = "ans" id = a3>Red</div>
+        <div class="answer-container">
+            <div class="ans" id="a1">Blue</div>
+            <div class="ans" id="a2">Yellow</div>
+            <div class="ans" id="a3">Red</div>
         </div>
-
     </div>
 
-    <div class="hover-div">Hover over me!</div>
-
-    <script src="pg1script.js">
+    <script>
         function toggleTheme() {
             document.body.classList.toggle('dark-theme');
         }
-        
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const boxes = document.querySelectorAll('.box');
+            const answers = document.querySelectorAll('.ans');
+            let selectedBox = null;
+            let selectedAnswer = null;
+            let remainingPairs = 3;
 
+            boxes.forEach(box => {
+                box.addEventListener('click', () => {
+                    if (box.classList.contains('hidden')) return;
+
+                    boxes.forEach(b => b.classList.remove('selected'));
+
+                    box.classList.add('selected');
+                    selectedBox = box;
+
+                    if (selectedAnswer) {
+                        handleMatch();
+                    }
+                });
+            });
+
+            answers.forEach(answer => {
+                answer.addEventListener('click', () => {
+                    if (answer.classList.contains('hidden')) return;
+                    
+                    answers.forEach(a => a.classList.remove('selected'));
+
+                    answer.classList.add('selected');
+                    selectedAnswer = answer;
+
+                    if (selectedBox) {
+                        handleMatch();
+                    }
+                });
+            });
+
+            function handleMatch() {
+                const colorMapping = {
+                    'p1c1': 'a3', // red -> "red"
+                    'p1c2': 'a1', // blue -> "blue"
+                    'p1c3': 'a2'  // yellow -> "yellow"
+                };
+
+                const isCorrect = colorMapping[selectedBox.id] === selectedAnswer.id;
+                
+                // hide the elements
+                selectedBox.classList.add('hidden');
+                selectedAnswer.classList.add('hidden');
+                
+                remainingPairs--;
+
+                // check to move
+                if (remainingPairs === 0) {
+                    setTimeout(() => {
+                        alert('Moving to next page...');
+                        window.location.href = 'page2.html';
+                    }, 500);
+                }
+
+                // reset
+                selectedBox.classList.remove('selected');
+                selectedAnswer.classList.remove('selected');
+                selectedBox = null;
+                selectedAnswer = null;
+            }
+        });
+    </script>
 </body>
 </html>
