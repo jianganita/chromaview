@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // not match
                 showMessage('Try again!', 'error');
             }
+
+            game.checkPage2Answer([colorId], [answerId])
             
             // Reset selections
             selectedColorBox.style.border = '';
@@ -90,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
             messageEl.style.display = 'none';
         }, 2000);
     }
-    
+
     colorBoxes.forEach(box => {
         box.addEventListener('click', handleColorBoxClick);
     });

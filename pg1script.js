@@ -1,4 +1,8 @@
+import ColorGame from './logic.js';
+const game = new ColorGame();
+
 document.addEventListener('DOMContentLoaded', () => {
+  const game = new ColorGame();
   const colorBoxes = document.querySelectorAll('.colour-container .box');
   const answerBoxes = document.querySelectorAll('.answer-container .ans');
   let selectedColorBox = null;
@@ -51,6 +55,8 @@ document.addEventListener('DOMContentLoaded', () => {
               // not match
               showMessage('Try again!', 'error');
           }
+
+          game.checkPage1Answer(colorId, answerId)
           
           // reset
           selectedColorBox.style.border = '';

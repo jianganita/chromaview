@@ -1,46 +1,123 @@
 <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Hover Border</title>
-            <link rel="stylesheet" href="styles.css">
-        </head>
-        
-        <body>
-            <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Match</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .selected {
+            border: 5px solid rgb(171, 171, 255) !important;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+    <div class="container">
+        <div class="colour-container">
+            <div class="box" id="c1"></div>
+            <div class="box" id="c2"></div>
+            <div class="box" id="c3"></div>
+        </div>
+        <div class="colour-container1">
+            <div class="box" id="c4"></div>
+            <div class="box" id="c5"></div>
+            <div class="box" id="c6"></div>
+        </div>
+        <div class="answer-container">
+            <div class="ans" id="a1">Purple</div>
+            <div class="ans" id="a2">Green</div>
+            <div class="ans" id="a3">Red</div>
+        </div>
+        <div class="answer-container1">
+            <div class="ans" id="a4">Yellow</div>
+            <div class="ans" id="a5">Orange</div>
+            <div class="ans" id="a6">Blue</div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('dark-theme');
+        }
+    </script>
+        <script type="module" src="pg2Script.js">
+            document.addEventListener('DOMContentLoaded', () => {
+                const boxes = document.querySelectorAll('.box');
+                const answers = document.querySelectorAll('.ans');
+                let selectedBox = null;
+                let selectedAnswer = null;
+                let remainingPairs = 6;
     
-            <div class = "container">
+                boxes.forEach(box => {
+                    box.addEventListener('click', () => {
+                        if (box.classList.contains('hidden')) return;
+    
+                        boxes.forEach(b => b.classList.remove('selected'));
+    
+                        box.classList.add('selected');
+                        selectedBox = box;
+    
+                        if (selectedAnswer) {
+                            handleMatch();
+                        }
+                    });
+                });
+    
+                answers.forEach(answer => {
+                    answer.addEventListener('click', () => {
+                        if (answer.classList.contains('hidden')) return;
+                        
+                        answers.forEach(a => a.classList.remove('selected'));
+    
+                        answer.classList.add('selected');
+                        selectedAnswer = answer;
+    
+                        if (selectedBox) {
+                            handleMatch();
+                        }
+                    });
+                });
+    
+                function handleMatch() {
+                    const colorMapping = {
+                        'c1': 'a6',
+                        'c2': 'a1',
+                        'c3': 'a5',
+                        'c4': 'a2',
+                        'c5': 'a3',
+                        'c6': 'a4'
+                    };
+    
+                    const isCorrect = colorMapping[selectedBox.id] === selectedAnswer.id;
 
-                <div class = "colour-container">
-                    <div class = "box" id = c1>1</div>
-                    <div class = "box" id = c2>2</div>
-                    <div class = "box" id = c3>3</div>
-                </div>
-                <div class = "colour-container1">
-                    <div class = "box" id = c4>4</div>
-                    <div class = "box" id = c5>5</div>
-                    <div class = "box" id = c6>6</div>
-                </div>
-                <div class = "answer-container">
-                    <div class = "ans" id = c0>hi</div>
-                    <div class = "ans" id = c0>hello</div>
-                    <div class = "ans" id = c0>hello</div>
-                </div>
-                <div class = "answer-container1">
-                    <div class = "ans" id = c0>hi</div>
-                    <div class = "ans" id = c0>hello</div>
-                    <div class = "ans" id = c0>hello</div>
-                </div>
-
-            </div>
-
-            <div class="hover-div">Hover over me!</div>
-
-            <script>
-                function toggleTheme() {
-                    document.body.classList.toggle('dark-theme');
+                    // save to game state
+                    const game = new ColorGame();
+                    game.checkPage2Answer([selectedBox.id], [selectedAnswer.id]);
+                    
+                    // hide the elements
+                    selectedBox.classList.add('hidden');
+                    selectedAnswer.classList.add('hidden');
+                    
+                    remainingPairs--;
+    
+                    // check to move
+                    if (remainingPairs === 0) {
+                        setTimeout(() => {
+                            alert('Moving to next page...');
+                            window.location.href = 'page3.html';
+                        }, 500);
+                    }
+    
+                    // reset
+                    selectedBox.classList.remove('selected');
+                    selectedAnswer.classList.remove('selected');
+                    selectedBox = null;
+                    selectedAnswer = null;
                 }
-                </script>
-        </body>
+            });
+        </script>
+</body>
 </html>
